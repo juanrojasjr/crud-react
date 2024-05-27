@@ -227,6 +227,7 @@ const Cotizaciones = () => {
             .then((result) => {
                 //Ordenar elementos por fecha
                 result.cotizaciones.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                
                 setCotizaciones(result.cotizaciones)
             })
             .catch((error) => console.error(error));
