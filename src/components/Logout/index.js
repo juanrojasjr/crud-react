@@ -4,6 +4,7 @@ import { Outlet, Link } from "react-router-dom";
 
 const Logout = ({ onStateChange }) => {
   const handleLogout = () => {
+    // Swal (modal) para cerrar la sesión
     Swal.fire({
       icon: 'question',
       title: 'Cerrar sesión',

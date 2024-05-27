@@ -6,6 +6,8 @@ import Login from '../Login';
 import Logout from '../Logout';
 
 const Header = ({ isAuthenticated, onStateChange }) => {
+
+    //Encargado de agregar el fondo cuando existe scroll
     let selectHeader = document.querySelector('#header')    
     if (selectHeader) {
         const headerScrolled = () => {

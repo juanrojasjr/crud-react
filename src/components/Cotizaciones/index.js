@@ -217,7 +217,6 @@ const Cotizaciones = () => {
         })
             .then((response) => response.json())
             .then((result) => {
-                console.log(result)
                 setCotizaciones(result.cotizaciones)
             })
             .catch((error) => console.error(error));
