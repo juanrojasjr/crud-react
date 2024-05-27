@@ -6,6 +6,7 @@ const Cotizaciones = () => {
 
     // Variables para obtener datos del LocalStorage
     const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
     const isAdmin = localStorage.getItem('is_admin');
     const isAuthenticated = localStorage.getItem('is_authenticated');
 
@@ -295,7 +296,7 @@ const Cotizaciones = () => {
                                     </>
                                 })
                             :
-                                null
+                                <p>No se ha creado cotizaciones</p>
                         }
                     </div>
                 </div>

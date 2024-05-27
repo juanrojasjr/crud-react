@@ -59,8 +59,12 @@ const Login = ({ onStateChange }) => {
             willClose: () => {
               localStorage.setItem('is_authenticated', true);
               localStorage.setItem('token', result.access_token);
-              localStorage.setItem('user_email', email);
-              if (adminEmail === email) localStorage.setItem('is_admin', true);
+              // Guardar el id del usuario
+              localStorage.setItem('user_id', result.user.id);
+              // Guardar el email del usuario
+              localStorage.setItem('user_email', result.user.email);
+              //Validar si es administrador
+              if (result.user.role === "ADMIN") localStorage.setItem('is_admin', true);
               onStateChange(true);
               Swal.fire({
                 icon: 'success',
