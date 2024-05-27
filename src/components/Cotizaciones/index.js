@@ -44,8 +44,8 @@ const Cotizaciones = () => {
     // Función encargada de crear nuevas cotizaciones
     const modalCrearFs = () => {
         let
-            getTitle = document.querySelector('#crear-titulo').val,
-            getDescription = document.querySelector('#crear-description').val;
+            getTitle = document.querySelector('#crear-titulo').value,
+            getDescription = document.querySelector('#crear-description').value;
 
         if (getTitle === '' || getDescription === '') {
             Swal.fire({
@@ -93,6 +93,7 @@ const Cotizaciones = () => {
                                     showConfirmButton: false,
                                     timer: 1500,
                                 });
+                                refreshPage();
                             },
                         });
                     }
@@ -177,6 +178,7 @@ const Cotizaciones = () => {
                                     showConfirmButton: false,
                                     timer: 1500,
                                 });
+                                refreshPage();
                             },
                         });
                     }
@@ -207,6 +209,12 @@ const Cotizaciones = () => {
         parent.classList.add('d-none')
     }
 
+    const refreshPage = () => {
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+    }
+
     // Hook encargado de consultar y almacenar los items en objeto
     useEffect(() => {
         fetch("http://127.0.0.1:8000/cotizaciones", {
@@ -217,6 +225,8 @@ const Cotizaciones = () => {
         })
             .then((response) => response.json())
             .then((result) => {
+                //Ordenar elementos por fecha
+                result.cotizaciones.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 setCotizaciones(result.cotizaciones)
             })
             .catch((error) => console.error(error));
@@ -300,7 +310,7 @@ const Cotizaciones = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <div className="mb-3">
+                            <div className="mb-3 d-none">
                                 <input id="approve-id" type="number" />
                             </div>
                             <div className="mb-3">
