@@ -9,10 +9,6 @@ const Login = ({ onStateChange }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
 
-  const
-    adminEmail = 'jorgesn293@hotmail.com',
-    adminPassword = 'pass123';
-
   const handleLogin = e => {
     e.preventDefault();
 
@@ -158,7 +154,7 @@ const Login = ({ onStateChange }) => {
 
   return (
     <>
-      <Button className="btn-default me-2" variant="primary" onClick={handleShow}>
+      <Button className="btn-default m-0" id="btnLogin" variant="primary" onClick={handleShow}>
         Acceder/Registrarse
       </Button>
       <Modal

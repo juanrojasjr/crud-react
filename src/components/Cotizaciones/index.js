@@ -228,11 +228,15 @@ const Cotizaciones = () => {
             .then((result) => {
                 //Ordenar elementos por fecha
                 result.cotizaciones.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                
+
                 setCotizaciones(result.cotizaciones)
             })
             .catch((error) => console.error(error));
     }, [])
+
+    let status = 'badge text-bg-secondary p-2';
+    let btnShow1 = (!isAdmin) ? 'btn btn-success mx-2 d-none' : 'btn btn-success mx-2';
+    let btnShow2 = (!isAdmin) ? 'btn btn-danger d-none' : 'btn btn-danger';
 
     return (
         <>
@@ -253,10 +257,7 @@ const Cotizaciones = () => {
                         </div>
                         {
                             cotizaciones.length > 0 ?
-                                cotizaciones.map(cotizacion => {
-                                    let status = 'badge text-bg-secondary p-2';
-                                    let btnShow1 = (!isAdmin) ? 'btn btn-success mx-2 d-none' : 'btn btn-success mx-2';
-                                    let btnShow2 = (!isAdmin) ? 'btn btn-danger d-none' : 'btn btn-danger';
+                                cotizaciones.map(cotizacion => {                                    
                                     switch (cotizacion.state) {
                                         case "Creado":
                                             status += " bg-warning";
@@ -270,8 +271,7 @@ const Cotizaciones = () => {
                                             status += cotizacion.state;
                                             break;
                                     }
-                                    return <>
-                                        <div className="col-12 col-md-10 mb-4" key={cotizacion.id}>
+                                    return <div className="col-12 col-md-10 mb-4" key={cotizacion.id}>
                                             <div className="card" data-card={cotizacion.id}>
                                                 <div className="card-body">
                                                     <h5 className="card-title fw-bold position-relative py-3 mb-0">
@@ -293,7 +293,6 @@ const Cotizaciones = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </>
                                 })
                             :
                                 <p>No se ha creado cotizaciones</p>

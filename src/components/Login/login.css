@@ -221,3 +221,12 @@
   -webkit-box-shadow: 0 8px 24px 0 rgba(65, 84, 241, 0.2);
           box-shadow: 0 8px 24px 0 rgba(65, 84, 241, 0.2);
 }
+.translateX {
+  transform: translateX(50%);
+}
+
+@media (min-width: 768px) {
+  .translateX {
+  transform: translateX(0);
+}
+}
