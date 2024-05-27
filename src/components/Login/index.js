@@ -20,9 +20,6 @@ const Login = ({ onStateChange }) => {
       email = document.getElementById('email').value,
       password = document.getElementById('password').value;
 
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
     fetch("http://127.0.0.1:8000/login", {
       method: "POST",
       headers: {
@@ -79,6 +76,82 @@ const Login = ({ onStateChange }) => {
       .catch((error) => console.error(error));
   };
 
+  const register = e => {
+    e.preventDefault();
+    let
+      getEmail = document.querySelector('#register-email').value,
+      getPass = document.querySelector('#register-pass').value;
+
+    if (getEmail === '' || getPass === '') {
+      Swal.fire({
+        timer: 1500,
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading()
+        },
+        willClose: () => {
+          Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: "Los campos de correo y/o contraseña no pueden estar vacíos.",
+            showConfirmButton: true
+          })
+        }
+      })
+    } else {
+      fetch("http://127.0.0.1:8000/register_user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "email": getEmail,
+          "password": getPass
+        }),
+        redirect: "follow"
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          if (result.hasOwnProperty('message')) {
+            Swal.fire({
+              timer: 1500,
+              showConfirmButton: false,
+              willOpen: () => {
+                Swal.showLoading()
+              },
+              willClose: () => {
+                Swal.fire({
+                  icon: 'error',
+                  title: '¡Error!',
+                  text: result.message,
+                  showConfirmButton: true
+                })
+              }
+            })
+          }
+          if (result.hasOwnProperty('id')) {
+            Swal.fire({
+              timer: 1500,
+              showConfirmButton: false,
+              willOpen: () => {
+                Swal.showLoading();
+              },
+              willClose: () => {
+                Swal.fire({
+                  icon: 'success',
+                  title: '¡Bienvenido!',
+                  text: "Ya puede iniciar sesión",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              },
+            });
+          }
+        })
+        .catch((error) => console.error(error));
+    }
+  }
+
   return (
     <>
       <Button className="btn-default me-2" variant="primary" onClick={handleShow}>
@@ -120,19 +193,17 @@ const Login = ({ onStateChange }) => {
                 <div className="center-wrap">
                   <div className="text-center">
                     <h4 className="mb-4 pb-3">Registrarse</h4>
-                    <div className="form-group">
-                      <input type="text" name="logname" className="form-style" placeholder="Su nombre completo" id="logname" autoComplete="off" />
-                      <i className="input-icon bi bi-person"></i>
-                    </div>
-                    <div className="form-group mt-2">
-                      <input type="email" name="logemail" className="form-style" placeholder="Su correo" id="logemail" autoComplete="off" />
-                      <i className="input-icon bi bi-at"></i>
-                    </div>
-                    <div className="form-group mt-2">
-                      <input type="password" name="logpass" className="form-style" placeholder="Su contraseña" id="logpass" autoComplete="off" />
-                      <i className="input-icon bi bi-lock"></i>
-                    </div>
-                    <a href="#" className="btn mt-4">Registrarme</a>
+                    <form onSubmit={register}>
+                      <div className="form-group mt-2">
+                        <input type="email" name="logemail" className="form-style" placeholder="Su correo" id="register-email" autoComplete="off" />
+                        <i className="input-icon bi bi-at"></i>
+                      </div>
+                      <div className="form-group mt-2">
+                        <input type="password" name="logpass" className="form-style" placeholder="Su contraseña" id="register-pass" autoComplete="off" />
+                        <i className="input-icon bi bi-lock"></i>
+                      </div>
+                      <button type="submit" className="btn mt-4">Registrarme</button>
+                    </form>
                   </div>
                 </div>
               </div>
